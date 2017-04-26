@@ -1,5 +1,6 @@
 #!/bin/bash
- aws s3 cp ./imagestemp/t.jpg s3://swiftarycelebritytemp/t.jpg 
+ aws s3 cp ./imagestemp/leonardo_dicaprio2.jpeg s3://swiftarycelebritytemp/
+ #aws s3 cp ./imagestemp/t.jpg s3://swiftarycelebritytemp/t.jpg 
  #aws s3 rm  s3://swiftarycelebritytemp/matt_damon4.jpg 
  #aws s3 cp ./imagestemp/matt_damon4.jpg s3://swiftarycelebritytemp/matt_damon4.jpg 
  #aws s3 rm  s3://swiftarycelebritytemp/angelina_jolie.jpg 
