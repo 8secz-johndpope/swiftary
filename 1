@@ -49,9 +49,8 @@ def search_faces(bucket_name, imagefile):
          KeyConditionExpression=Key('FaceId').eq(FaceId)
     )
     #print ScannedFaces  
-    for Images in ScannedFaces ['Items']:
-      print ('ExternalImageId %s' % Images ['ExternalImageId'])
-
+    #for Images in ScannedFaces ['Items']:
+      #print ('ExternalImageId %s' % Images ['ExternalImageId'])
     #return response
 
 
