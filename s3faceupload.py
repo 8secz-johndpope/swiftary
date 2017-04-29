@@ -13,6 +13,7 @@ from boto3.dynamodb.conditions import Key
 from decimal import Decimal
 import json
 import urllib
+lambda_client = boto3.client('lambda')
 
 print('Loading function')
 rekognition = boto3.client('rekognition', region_name='eu-west-1')
@@ -40,20 +41,37 @@ def search_faces(bucket_name, imagefile):
     print ('ExternalImageId %s' % response ['FaceMatches'][0]['Face']['ExternalImageId'])
     print ('Confidence %s' % response ['FaceMatches'][0]['Face']['Confidence'])
     print ('ImageId %s' % response ['FaceMatches'][0]['Face']['ImageId'])
-
     FaceId          = response ['FaceMatches'][0]['Face']['FaceId']
+    #celebrity_match = return_celebrity_match('ScannedFaces',FaceId)
+    #print ('FaceId %s' % FaceId )
+    #ScannedFaces = ScannedFacesTable.query( 
+    #     KeyConditionExpression=Key('FaceId').eq(FaceId)
+    #)
+    #for Images in ScannedFaces ['Items']:
+    #  print ('Celebrity Match %s %s' % (Images ['FirstName'] ,  Images ['SurName']))
+    #return response
+    MatchDetails = { "TableName": "ScannedFaces", "FaceId": "68eb0884-5969-5ead-9d48-f3974fa64aa3" }
+    invoke_response = lambda_client.invoke(FunctionName="FetchFaceDetails",
+                                            InvocationType='RequestResponse',
+                                            Payload=json.dumps(MatchDetails))
+    FaceMatchResults = json.loads(invoke_response['Payload'].read())
+    FirstName   = FaceMatchResults['FirstName']
+    print (' FirstName %s ' % FirstName)
+    SurName     = FaceMatchResults['SurName']
+    FaceId      = FaceMatchResults['FaceId']
+    print ('Celebrity Match %s %s' % ( FirstName ,  SurName))
+    #def return_celebrity_match(table_name,FaceId):
+    #print ('return_celebrity_match')
+    #ScannedFacesTable = dbresource.Table(table_name)
+    #print ('FaceId %s' % FaceId )
+    #ScannedFaces = ScannedFacesTable.query( 
+    #KeyConditionExpression=Key('FaceId').eq(FaceId)
+    #)
 
-    print ('FaceId %s' % FaceId )
-
-    ScannedFaces = ScannedFacesTable.query( 
-         KeyConditionExpression=Key('FaceId').eq(FaceId)
-    )
-    #print ScannedFaces  
-    for Images in ScannedFaces ['Items']:
-      print ('ExternalImageId %s' % Images ['ExternalImageId'])
+    #for Images in ScannedFaces ['Items']:
+    #print ('Celebrity Match %s %s' % (Images ['FirstName'] ,  Images ['SurName']))
 
     #return response
-
 
 def detect_faces(bucket, key):
     response = rekognition.detect_faces(Image={"S3Object": {"Bucket": bucket, "Name": key}})
