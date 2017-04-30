@@ -9,7 +9,7 @@ def lambda_handler(event, context):
     TableName = event['TableName']
     FaceId     = event['FaceId']
     
-    print ('return_celebrity_match')
+    print ('FetchFaceDetails')
     ScannedFacesTable = dbresource.Table(TableName)
     print ('FaceId %s' % FaceId )
 
