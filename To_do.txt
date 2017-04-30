@@ -1,0 +1,12 @@
+Create a python to be replaced by Xcode
+
+Generate request
+Construct file name userid_request_id_uuid
+Insert request record (Invole lambda function)
+Copy renamed file to s3
+	Triggers lambda function
+Wait for the status of record to change to 'Matched'/'UnMatched'
+Fetch record
+Display result
+
+
