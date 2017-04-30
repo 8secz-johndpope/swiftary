@@ -26,7 +26,7 @@ def lambda_handler(event, context):
         'UserId'         : lv_UserId,
         'RequestId'      : lv_RequestId
         },
-       UpdateExpression="set FaceId = :a, EndTime=:b, Request_Status=:c",
+       UpdateExpression="set FaceId = :a, EndDateTime=:b, Request_Status=:c",
          ExpressionAttributeValues={
         ':a': lv_FaceId,
         ':b': lv_DateTime,

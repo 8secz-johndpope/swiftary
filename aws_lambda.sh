@@ -8,9 +8,15 @@ aws lambda update-function-configuration --function-name s3faceupload --handler 
 aws lambda update-function-code --function-name FetchFaceDetails --zip-file fileb://FetchFaceDetails.zip
 aws lambda update-function-configuration --function-name FetchFaceDetails --handler FetchFaceDetails.lambda_handler
 
-aws lambda update-function-code --function-name InsertRequest --zip-file fileb://InsertRequest.py
+aws lambda update-function-code --function-name InsertRequest --zip-file fileb://InsertRequest.zip
 aws lambda update-function-configuration --function-name InsertRequest --handler InsertRequest.lambda_handler
 
-aws lambda update-function-code --function-name UpdateRequest --zip-file fileb://UpdateRequest.py
+aws lambda update-function-code --function-name UpdateRequest --zip-file fileb://UpdateRequest.zip
 aws lambda update-function-configuration --function-name UpdateRequest --handler UpdateRequest.lambda_handler
+
+aws lambda update-function-code --function-name FetchRequestDetails --zip-file fileb://FetchRequestDetails.zip
+aws lambda update-function-configuration --function-name FetchRequestDetails --handler FetchRequestDetails.lambda_handler
+
+aws lambda update-function-code --function-name FetchRequestDetails --zip-file fileb://FetchRequestDetails.zip
+aws lambda update-function-configuration --function-name FetchRequestDetails --handler FetchRequestDetails.lambda_handler
 
