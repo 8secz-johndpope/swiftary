@@ -1,0 +1,3 @@
+zip UpdateRequest.zip UpdateRequest.py
+aws lambda update-function-code --function-name UpdateRequest --zip-file fileb://UpdateRequest.zip
+#aws lambda update-function-configuration --function-name UpdateRequest--handler UpdateRequest.lambda_handler
