@@ -20,9 +20,12 @@ def lambda_handler(event, context):
     for Images in ScannedFaces ['Items']:
       print ('Celebrity Match %s %s' % (Images ['FirstName'] ,  Images ['SurName']))
     
-    response = {"FirstName" : Images ['FirstName'],
-        "SurName" : Images ['SurName'],
-        "FaceId" : Images ['FaceId']
+    response = {
+                "FaceId" : Images ['FaceId'],
+                "FirstName" : Images ['FirstName'],
+                "SurName" : Images ['SurName'],
+                "ExternalImageId" : Images ['ExternalImageId'],
+                "Info" : Images ['Info']
     }
     
     #return response

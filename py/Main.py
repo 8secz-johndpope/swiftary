@@ -12,7 +12,8 @@ from decimal import Decimal
 import json
 import urllib
 
-lv_bucket_name = 'swiftarycelebritytemp'
+lv_bucket_temp_name = 'swiftarycelebritytemp'
+lv_bucket_match_name = 'swiftarycelebritymatch'
 lv_region     = 'eu-west-1'
 lv_Local_ImageFile = 'matt_damon3.jpg'
 
@@ -25,7 +26,7 @@ def Main():
 #
 # Insert request record
 #
-    UserId          = 12345
+    UserId          = 123456
     InsertRequest_Details = { "UserId": UserId}
     InsertRequest_Response = lambda_client.invoke(FunctionName="InsertRequest_SWLD",
                                            InvocationType='RequestResponse',
@@ -43,10 +44,10 @@ def Main():
 #
 # Upload the file to S3
 #
-    print ('Loading image into bucket %s' %lv_bucket_name )
+    print ('Loading image into bucket %s' %lv_bucket_temp_name )
     s3_object_exists_waiter= s3_client.get_waiter('object_exists')
-    s3resource.Object(lv_bucket_name, lv_ImageFile).upload_file('../imagestemp/%s' %lv_Local_ImageFile)
-    s3_object_exists_waiter.wait(Bucket=lv_bucket_name, Key=lv_ImageFile)
+    s3resource.Object(lv_bucket_temp_name, lv_ImageFile).upload_file('../imagestemp/%s' %lv_Local_ImageFile)
+    s3_object_exists_waiter.wait(Bucket=lv_bucket_temp_name, Key=lv_ImageFile)
     
 #
 # Update request record
@@ -68,6 +69,16 @@ def Main():
 
     print ('Updated Request record ')
 
+#
+# wait for match file in s3
+#
+    print ('Waiting for image in bucket %s' %lv_bucket_match_name )
+    s3_object_exists_waiter= s3_client.get_waiter('object_exists')
+    s3_object_exists_waiter.wait(Bucket=lv_bucket_match_name, Key=lv_ImageFile)
+    
+#
+# Update request record
+#
     response = {
          'UserId'        : lv_UserId,
          'RequestId'     : lv_RequestId,

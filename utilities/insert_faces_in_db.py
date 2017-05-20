@@ -25,8 +25,8 @@ for Images in Faces:
     lv_ImageId         = Images ['ImageId']
     lv_ExternalImageId = Images ['ExternalImageId'],
     lv_Names           = ExternalImageId.split("_")
-    lv_Firstname       = names[0]
-    lv_Surname         = names[1]
+    lv_Firstname       = lv_Names[0]
+    lv_Surname         = lv_Names[1]
 
     print ('FaceId %s' % lv_FaceId)
     print ('ImageId %s' % lv_ImageId)
