@@ -26,6 +26,7 @@ def lambda_handler(event, context):
      lv_ImageFile        = Requests ['ImageFile']
      lv_ExternalImageId  = Requests ['ExternalImageId']
      lv_Request_Status   = Requests ['Request_Status']
+     lv_MatchedFaceUrl   = Requests ['MatchedFaceUrl']
 	
     #print ('User request details %s %s %s %s %s %s' % (str(lv_UserId), lv_RequestId, lv_FaceId , lv_StartDateTime , lv_EndDateTime   , lv_Status))
     #print ('User request details %s %s ' % (str(lv_UserId), lv_RequestId))
@@ -39,6 +40,7 @@ def lambda_handler(event, context):
                "SurName"          : lv_SurName,
                "ImageFile"        : lv_ImageFile,
                "ExternalImageId"  : lv_ExternalImageId,
+               "MatchedFaceUrl"   : lv_MatchedFaceUrl,
                "Request_Status"   : lv_Request_Status  } 
 
   return response

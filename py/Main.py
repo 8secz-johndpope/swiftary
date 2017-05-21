@@ -77,6 +77,45 @@ def Main():
     s3_object_exists_waiter.wait(Bucket=lv_bucket_match_name, Key=lv_ImageFile)
     
 #
+# Fetch request details
+#
+
+    lv_FetchRequestDetails = { 
+          "UserId"    : lv_UserId, 
+          "RequestId" : lv_RequestId
+          }
+
+    lv_FetchRequestResponse = lambda_client.invoke(FunctionName="FetchRequestDetails_SWLD",
+                                           InvocationType='RequestResponse',
+                                           Payload=json.dumps(lv_FetchRequestDetails))
+
+    lv_FetchtRequestResults = json.loads(lv_FetchRequestResponse['Payload'].read())
+
+    lv_UserId           = lv_FetchtRequestResults['UserId']
+    lv_RequestId        = lv_FetchtRequestResults['RequestId']
+    lv_StartDateTime    = lv_FetchtRequestResults['StartDateTime']
+    lv_EndDateTime      = lv_FetchtRequestResults['EndDateTime']
+    lv_FaceId           = lv_FetchtRequestResults['FaceId']
+    lv_Firstname        = lv_FetchtRequestResults['Firstname']
+    lv_SurName          = lv_FetchtRequestResults['SurName']
+    lv_ImageFile        = lv_FetchtRequestResults['ImageFile']
+    lv_ExternalImageId  = lv_FetchtRequestResults['ExternalImageId']
+    lv_Request_Status   = lv_FetchtRequestResults['Request_Status']
+    lv_MatchedFaceUrl   = lv_FetchtRequestResults['MatchedFaceUrl']
+
+    print ('Request Deatils %s %s %s %s %s %s %s %s %s %s %s ' %(
+    lv_UserId           ,
+    lv_RequestId        ,
+    lv_StartDateTime    ,
+    lv_EndDateTime      ,
+    lv_FaceId           ,
+    lv_Firstname        ,
+    lv_SurName          ,
+    lv_ImageFile        ,
+    lv_ExternalImageId  ,
+    lv_MatchedFaceUrl  ,
+    lv_Request_Status   ))
+#
 # Update request record
 #
     response = {

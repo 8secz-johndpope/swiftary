@@ -6,6 +6,7 @@ from boto3.dynamodb.conditions import Key
 #from decimal import Decimal
 #import uuid
 
+lv_bucket_celebrity_name = 'swiftarycelebrity'
 lv_bucket_match_name = 'swiftarycelebritymatch'
 dbresource = boto3.resource('dynamodb', region_name='eu-west-1')
 rekognition = boto3.client('rekognition',region_name='eu-west-1')
@@ -45,6 +46,9 @@ def lambda_handler(event, context):
          lv_SurName         = Images ['SurName']
          print ('Match Details %s %s %s' % (lv_FirstName,lv_SurName,lv_ExternalImageId))
 
+         lv_MatchedFaceUrl = s3_client.generate_presigned_url( ClientMethod='get_object',
+                                       Params={ 'Bucket': lv_bucket_celebrity_name,
+                                                'Key': lv_ExternalImageId })
 
     #FaceRequest= FaceRequestTable.query( KeyConditionExpression=Key('RequestId').eq(lv_RequestId))
 
@@ -53,14 +57,15 @@ def lambda_handler(event, context):
         'UserId'         : lv_UserId,
         'RequestId'      : lv_RequestId
         },
-       UpdateExpression="set FaceId = :a, EndDateTime=:b, ExternalImageId=:c, Firstname=:d, SurName=:e,Request_Status=:f",
+       UpdateExpression="set FaceId = :a, EndDateTime=:b, ExternalImageId=:c, Firstname=:d, SurName=:e,Request_Status=:f, MatchedFaceUrl=:g",
          ExpressionAttributeValues={
         ':a': lv_FaceId,
         ':b': lv_DateTime,
         ':c': lv_ExternalImageId ,
         ':d': lv_FirstName      ,
         ':e': lv_SurName         ,
-        ':f': lv_Status         
+        ':f': lv_Status         ,
+        ':g': lv_MatchedFaceUrl 
     },
     ReturnValues="UPDATED_NEW"
     )
